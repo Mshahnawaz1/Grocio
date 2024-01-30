@@ -10,8 +10,6 @@ Watch a demo for this app [here](https://youtu.be/8ix1e4CNbR8?si=28602U5v7dwa86u
 - [Quickstart](#quickstart)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
-
 
 
 # Features
