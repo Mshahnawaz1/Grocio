@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+catalogue
+{% endblock %}
+
+{% block main %}
+<form action="/bmi" method="post" id="mform">
+    <div class="mb-3" id="height">
+        <input autocomplete="off" autofocus required class="form-control mx-auto w-auto" name="height"
+            placeholder="Height in cm" type="text">
+        <b><span class="error"></span></b>
+    </div>
+    <div class="mb-3" id="weight">
+        <input class="form-control mx-auto w-auto" required name="weight" placeholder="Weight in kg" type="text">
+        <b><span class="error"></span></b>
+
+    </div>
+    <button class="btn btn-primary" type="submit">Calculate BMI</button>
+</form>
+
+<script>
+    function check()
+    {
+        height =
+    }
+</script>
+
+{% endblock %}

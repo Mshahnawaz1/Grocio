@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block main %}
+<form action="/register" method="post" id="mform">
+    <div class="mb-3" id="username">
+        <input autocomplete="off" autofocus required class="form-control mx-auto w-auto" name="username"
+            placeholder="Username" type="text">
+        <b><span class="error"></span></b>
+    </div>
+    <div class="mb-3" id="pass">
+        <input class="form-control mx-auto w-auto" required name="password" placeholder="Password" type="password">
+        <b><span class="error"></span></b>
+
+    </div>
+    <div class="mb-3" id="cpass">
+        <input class="form-control mx-auto w-auto" required name="confirmpass" placeholder="Confirm Password"
+            type="password">
+        <b><span class="error"></span></b>
+
+    </div>
+    <button class="btn btn-primary" type="submit">Register</button>
+</form>
+
+<script>
+    // clears page after refresh
+    function clearErrors() {
+        errors = document.getElementsByClassName('error');
+        for (let item of errors) {
+            item.innerHTML = "";
+        }
+    }
+
+
+    function seterror(id, error) {
+        //sets error inside tag of id
+        let element = document.getElementById(id);
+        element.getElementsByClassName('error')[0].innerHTML = error;
+
+    }
+    function validatePassword(password) {
+        // Define validation criteria
+        const minLength = 8;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumber = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+        // Check if password meets all criteria
+        if (password.length < minLength) {
+            return "Password must be at least 8 characters long.";
+        } else if (!hasUpperCase) {
+            return "Password must contain at least one uppercase letter.";
+        } else if (!hasLowerCase) {
+            return "Password must contain at least one lowercase letter.";
+        } else if (!hasNumber) {
+            return "Password must contain at least one number.";
+        } else if (!hasSpecialChar) {
+            return "Password must contain at least one special character (e.g., !@#$%^&*()).";
+        } else {
+            return true;
+        }
+    }
+
+    // // Example usage
+    // let password = "StrongP@sswrd";
+    // let validationResult = validatePassword(password);
+    // console.log(validationResult);
+
+    function validateForm() {
+        var returnval = true;
+        clearErrors();
+
+        //perform validation and if validation fails, set the value of returnval to false
+        var user = document.forms['mform']["username"].value;
+        console.log(user);
+        if (user.length < 5) {
+            seterror("username", "Username is too short");
+            returnval = false;
+        }
+
+        var password = document.forms['mform']["password"].value;
+        console.log(password);
+        var len = password.length;
+        console.log(len);
+
+        if (!(validatePassword(password) === true)) {
+            seterror("pass", validatePassword(password));
+            returnval = false;
+        }
+
+        //  for login page
+        const cpasss = document.getElementById("cpass");
+
+        if (!(cpasss === null)) {
+
+            var cpas = document.forms['mform']["confirmpass"].value;
+            console.log(cpas);
+            if (cpas != password) {
+                seterror("cpass", "Password does not match!");
+                returnval = false;
+            }
+
+        }
+        return returnval;
+    }
+
+
+    //javacript
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+        document.getElementById("mform").addEventListener("submit", function(event) {
+            // event.preventDefault();
+            // validateForm();
+
+            if (!validateForm()) {
+                event.preventDefault();
+                console.log("Form validation failed!");
+            } else {
+                console.log("Form validation successful, allowing submission.");
+            }
+
+        })
+    })
+</script>
+{% endblock %}

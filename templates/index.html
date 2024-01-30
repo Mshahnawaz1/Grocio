@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block title %}
+catalogue
+{% endblock %}
+
+{% block main %}
+<!-- list of books -->
+<div>
+    <h2>About</h2>
+    <p>Using this site you can have a list for your groceries.
+        <br>
+        You can also remove the items.
+    </p>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>S.no</th>
+            <th>Item</th>
+            <th>Category</th>
+            <th>Time</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <th>{{loop.index}} </th>
+            <th>{{ item.name }}</th>
+            <th>{{ item.category }} </th>
+            <th>{{ item.time }} </th>
+
+            <th><button class="deleteBtn" name="{{item.id}}" data-id={{item.id}}>Delete</button> </th>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div id="message"></div>
+
+
+<script>
+    // delete
+
+    const deleteButtons = document.querySelectorAll('.deleteBtn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            console.log("hello")
+            const dataId = button.getAttribute('data-id');
+            const response = await fetch('/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data_id: dataId })
+            });
+
+            // result store message
+            const result = await response.json();
+
+            const messageDiv = document.getElementById('message');
+            if (response.ok) {
+                // how to edit this message
+                let message = "Item removed successfully" ;
+                messageDiv.textContent = message;
+                const rowToDelete = button.closest("tr");
+                rowToDelete.remove();
+            } else {
+                messageDiv.textContent = `Error: ${result.error}`;
+            }
+        });
+    });
+
+</script>
+{% endblock %}
+
+
+<!-- loop.index -- used for no. of iteration -->

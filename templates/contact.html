@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+add
+{% endblock %}
+
+{% block main %}
+    <h2 >Request to borrow book </h2>
+    <form action="/contact" method="post">
+        <select name ="book" class="form-select" aria-label="Default select example">
+            <option selected>Select Book</option>
+            {% for row in books %}
+            <option >{{ row.name }} </option>
+            {% endfor %}
+          </select>
+
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Write a mail to request book</label>
+            <label for="exampleFormControlTextarea1" class="form-label">Write a mail to request book</label>
+
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+<!-- write  email of owner  -->
+        <button class="btn btn-primary" type="submit">Borrow</button>
+    </form>
+
+{% endblock %}

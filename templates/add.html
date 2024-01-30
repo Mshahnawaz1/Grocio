@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+add
+{% endblock %}
+
+{% block main %}
+    <form action="/add" method="post">
+        <div class="mb-3" id="book">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="name" placeholder="Item"
+                type="text" required>
+        </div>
+        <div class="mb-3" id="owner">
+            <select name="category" class="form-select mx-auto w-auto" aria-label="Default select example">
+                <option selected>Select Category</option>
+                {% for row in category %}
+                <option>{{ row.category }} </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button class="btn btn-primary" type="submit" value="personal">Add Item</button>
+
+{% endblock %}
